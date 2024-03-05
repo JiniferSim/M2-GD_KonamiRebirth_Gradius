@@ -68,7 +68,7 @@ public class SpaceshipController : MonoBehaviour
 
     void ScrollBackground()
     {
-        // Bacground scrolling
+        // Background scrolling
         float backgroundScroll = backgroundScrollSpeed * Time.deltaTime;
         background.transform.Translate(Vector3.left * backgroundScroll);
 
@@ -89,7 +89,7 @@ public class SpaceshipController : MonoBehaviour
 
     void ChooseAbility()
     {
-        Debug.Log("Выбор способности!");
+        Debug.Log("choose ability");
     }
     
     private void OnTriggerEnter(Collider other)
