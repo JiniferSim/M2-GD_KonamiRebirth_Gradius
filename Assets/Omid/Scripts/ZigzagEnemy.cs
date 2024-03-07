@@ -21,6 +21,15 @@ public class ZigzagEnemy : MonoBehaviour
         MoveEnemy();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
+        {
+            Destroy(other);
+            Destroy(gameObject);
+        }
+    }
+
     void MoveEnemy()
     {
         if (transform.position.y < player.position.y && !moveLeft)
