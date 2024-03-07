@@ -1,17 +1,35 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpaceshipController : MonoBehaviour
 {
-    public float speed = 5f;
+    public float initialSpeed = 5f;
     public float rotationSpeed = 2f;
     public GameObject projectilePrefab; 
-    public float fireRate = 0.5f; 
-    public float backgroundScrollSpeed = 1f; 
+    public GameObject laserPrefab;
+    public GameObject assistantPrefab;
+    public float initialFireRate = 0.5f; 
+    public float backgroundScrollSpeed = 1f;
 
+
+    private float speed;
     private float verticalBoundary;
     private float horizontalBoundary;
     private float nextFireTime;
+    public static float fireRate;
     private GameObject background;
+
+    private Image speedupImage;
+    private Image missileImage;
+    private Image laserImage;
+    private Image optionImage;
+    private Image barrierImage;
+
+    private int powerUpCounter = 0;
+    private bool laserOn;
+    private bool barrierOn;
+    private bool missileOn;
+    private int optionCounter; 
 
     void Start()
     {
@@ -20,7 +38,16 @@ public class SpaceshipController : MonoBehaviour
         verticalBoundary = mainCamera.orthographicSize;
         horizontalBoundary = verticalBoundary * mainCamera.aspect;
 
+        speed = initialSpeed;
+        fireRate = initialFireRate;
+
         background = GameObject.Find("Background");
+
+        speedupImage = GameObject.Find("SpeedupImage").GetComponent<Image>();
+        missileImage = GameObject.Find("MissileImage").GetComponent<Image>();
+        laserImage = GameObject.Find("LaserImage").GetComponent<Image>();
+        optionImage = GameObject.Find("OptionImage").GetComponent<Image>();
+        barrierImage = GameObject.Find("BarrierImage").GetComponent<Image>();
     }
 
     void Update()
@@ -64,6 +91,60 @@ public class SpaceshipController : MonoBehaviour
         {
             ChooseAbility();
         }
+
+        // Powerup colors
+        switch (powerUpCounter)
+        {
+            case 0:
+                speedupImage.color = Color.blue;
+                missileImage.color = Color.blue;
+                laserImage.color = Color.blue;
+                optionImage.color = Color.blue;
+                barrierImage.color = Color.blue;
+                break;
+            case 1:
+                speedupImage.color = Color.yellow;
+                missileImage.color = Color.blue;
+                laserImage.color = Color.blue;
+                optionImage.color = Color.blue;
+                barrierImage.color = Color.blue;
+                break;
+            case 2:
+                speedupImage.color = Color.blue;
+                missileImage.color = Color.yellow;
+                laserImage.color = Color.blue;
+                optionImage.color = Color.blue;
+                barrierImage.color = Color.blue;
+                break;
+            case 3:
+                speedupImage.color = Color.blue;
+                missileImage.color = Color.blue;
+                laserImage.color = Color.yellow;
+                optionImage.color = Color.blue;
+                barrierImage.color = Color.blue;
+                break;
+            case 4:
+                speedupImage.color = Color.blue;
+                missileImage.color = Color.blue;
+                laserImage.color = Color.blue;
+                optionImage.color = Color.yellow;
+                barrierImage.color = Color.blue;
+                break;
+            case 5:
+                speedupImage.color = Color.blue;
+                missileImage.color = Color.blue;
+                laserImage.color = Color.blue;
+                optionImage.color = Color.blue;
+                barrierImage.color = Color.yellow;
+                break;
+            default:
+                speedupImage.color = Color.blue;
+                missileImage.color = Color.blue;
+                laserImage.color = Color.blue;
+                optionImage.color = Color.blue;
+                barrierImage.color = Color.blue;
+                break;
+        }
     }
 
     void ScrollBackground()
@@ -78,25 +159,96 @@ public class SpaceshipController : MonoBehaviour
         }
     }
 
-    void Shoot()
+    public void Shoot()
     {
+        GameObject[] assistants = GameObject.FindGameObjectsWithTag("Assistant");
 
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+        foreach (GameObject assistant in assistants)
+        {
+            GameObject projectile = Instantiate(projectilePrefab, assistant.transform.position, assistant.transform.rotation);
 
-        Vector3 projectileDirection = transform.right;
-        projectile.GetComponent<Rigidbody>().velocity = projectileDirection * speed * 2f; 
+            Vector3 projectileDirection = assistant.transform.right;
+            projectile.GetComponent<Rigidbody>().velocity = projectileDirection * speed * 2f;
+        }
+
+        GameObject bullet = Instantiate(projectilePrefab, transform.position, transform.rotation);
+
+        Vector3 bulletDirection = transform.right;
+        bullet.GetComponent<Rigidbody>().velocity = bulletDirection * speed * 2f;
+
+        nextFireTime = Time.time + fireRate;
     }
 
     void ChooseAbility()
     {
-        Debug.Log("choose ability");
+        switch (powerUpCounter)
+        {
+            case 0:
+                
+                break;
+            case 1:
+                SpeedUp();
+                powerUpCounter = 0;
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+                Option();
+                powerUpCounter = 0;
+                break;
+            case 5:
+
+                break;
+            default:
+
+                break;
+        }
     }
-    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
             Destroy(gameObject);
         }
+
+        if (other.CompareTag("Energy"))
+        {
+            if (powerUpCounter == 5)
+            {
+                powerUpCounter = 1;
+            }
+            else
+            {
+                powerUpCounter++;
+            }
+            
+
+        }
+    }
+
+    void SpeedUp()
+    {
+        speed *= 1.2f;
+        fireRate *= 1.2f;
+    }
+    void Missile()
+    {
+
+    }
+    void Laser()
+    {
+        
+    }
+    void Option()
+    {
+        Instantiate(assistantPrefab);
+    }
+    void Barrier()
+    {
+
     }
 }
