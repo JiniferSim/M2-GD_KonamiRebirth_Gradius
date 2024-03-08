@@ -7,6 +7,7 @@ public class SpaceshipController : MonoBehaviour
     public float rotationSpeed = 2f;
     public GameObject projectilePrefab; 
     public GameObject laserPrefab;
+    public GameObject missilePrefab;
     public GameObject assistantPrefab;
     public float initialFireRate = 0.5f; 
     public float backgroundScrollSpeed = 1f;
@@ -27,10 +28,10 @@ public class SpaceshipController : MonoBehaviour
 
     private int powerUpCounter = 0;
     private bool laserOn;
-    private bool barrierOn;
+    private int barrierLife;
     private bool missileOn;
-    private int optionCounter; 
-
+    private int optionCounter;
+    private int speedCounter;
     void Start()
     {
         Camera mainCamera = Camera.main;
@@ -162,23 +163,53 @@ public class SpaceshipController : MonoBehaviour
     public void Shoot()
     {
         GameObject[] assistants = GameObject.FindGameObjectsWithTag("Assistant");
-
-        foreach (GameObject assistant in assistants)
+        if (laserOn)
         {
-            GameObject projectile = Instantiate(projectilePrefab, assistant.transform.position, assistant.transform.rotation);
+            foreach (GameObject assistant in assistants)
+            {
+                GameObject laser = Instantiate(laserPrefab, assistant.transform.position, new Quaternion(0f, 0f, 0f, 0f));
 
-            Vector3 projectileDirection = assistant.transform.right;
-            projectile.GetComponent<Rigidbody>().velocity = projectileDirection * speed * 2f;
+                Vector3 laserDirection = assistant.transform.right;
+                laser.GetComponent<Rigidbody>().velocity = laserDirection * speed * 2f;
+            }
+
+            GameObject blast = Instantiate(laserPrefab, transform.position, new Quaternion(0f, 0f, 0f, 0f));
+
+            Vector3 blastDirection = transform.right;
+            blast.GetComponent<Rigidbody>().velocity = blastDirection * speed * 2f;
         }
+        else
+        {
+            foreach (GameObject assistant in assistants)
+            {
+                GameObject projectile = Instantiate(projectilePrefab, assistant.transform.position, new Quaternion(0f, 0f, 0f, 0f));
 
-        GameObject bullet = Instantiate(projectilePrefab, transform.position, transform.rotation);
+                Vector3 projectileDirection = assistant.transform.right;
+                projectile.GetComponent<Rigidbody>().velocity = projectileDirection * speed * 2f;
+            }
 
-        Vector3 bulletDirection = transform.right;
-        bullet.GetComponent<Rigidbody>().velocity = bulletDirection * speed * 2f;
+            GameObject bullet = Instantiate(projectilePrefab, transform.position, new Quaternion(0f,0f,0f,0f));
 
+            Vector3 bulletDirection = transform.right;
+            bullet.GetComponent<Rigidbody>().velocity = bulletDirection * speed * 2f;
+        }
+        if (missileOn)
+        {
+            foreach (GameObject assistant in assistants)
+            {
+                GameObject bomb = Instantiate(missilePrefab, assistant.transform.position, new Quaternion(0f, 0f, 0f, 0f));
+
+                Vector3 bombDirection = assistant.transform.up;
+                bomb.GetComponent<Rigidbody>().velocity = -bombDirection * speed * 2f;
+            }
+
+            GameObject missile = Instantiate(missilePrefab, transform.position, new Quaternion(0f, 0f, 0f, 0f));
+
+            Vector3 missileDirection = transform.up;
+            missile.GetComponent<Rigidbody>().velocity = -missileDirection * speed * 2f;
+        }
         nextFireTime = Time.time + fireRate;
     }
-
     void ChooseAbility()
     {
         switch (powerUpCounter)
@@ -187,21 +218,38 @@ public class SpaceshipController : MonoBehaviour
                 
                 break;
             case 1:
-                SpeedUp();
-                powerUpCounter = 0;
+                if (speedCounter < 6)
+                {
+                    SpeedUp();
+                    powerUpCounter = 0;
+                    speedCounter++;
+                }
+
                 break;
             case 2:
-
+                if (!missileOn)
+                {
+                    Missile();
+                    powerUpCounter = 0;
+                }
                 break;
             case 3:
-
+                if (!laserOn)
+                {
+                    Laser();
+                    powerUpCounter = 0;
+                }
                 break;
             case 4:
-                Option();
-                powerUpCounter = 0;
+                if (optionCounter<=3)
+                {
+                    Option();
+                    powerUpCounter = 0;
+                }
                 break;
             case 5:
-
+                Barrier();
+                powerUpCounter = 0;
                 break;
             default:
 
@@ -212,7 +260,14 @@ public class SpaceshipController : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            if (barrierLife<=0)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                barrierLife--;
+            }
         }
 
         if (other.CompareTag("Energy"))
@@ -233,22 +288,24 @@ public class SpaceshipController : MonoBehaviour
     void SpeedUp()
     {
         speed *= 1.2f;
-        fireRate *= 1.2f;
+        fireRate /= 1.1f;
+
     }
     void Missile()
     {
-
+        missileOn = true;
     }
     void Laser()
     {
-        
+        laserOn = true;
     }
     void Option()
     {
         Instantiate(assistantPrefab);
+        optionCounter++;
     }
     void Barrier()
     {
-
+        barrierLife = 10;
     }
 }
