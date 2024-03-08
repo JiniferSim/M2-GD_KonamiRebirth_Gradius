@@ -379,7 +379,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1314043251266546, guid: a30ef2e5b0c4a2f4f894c4ff7f998e13, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1870685333}
   m_SourcePrefab: {fileID: 100100000, guid: a30ef2e5b0c4a2f4f894c4ff7f998e13, type: 3}
 --- !u!1 &442254525
 GameObject:
@@ -774,6 +777,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 662173614}
   m_CullTransparentMesh: 1
+--- !u!1 &728139778 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1314043251266546, guid: a30ef2e5b0c4a2f4f894c4ff7f998e13, type: 3}
+  m_PrefabInstance: {fileID: 233112361}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1107290847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1418,6 +1426,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4167938680749096, guid: a30ef2e5b0c4a2f4f894c4ff7f998e13, type: 3}
   m_PrefabInstance: {fileID: 233112361}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1870685333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728139778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b8e6eadd748344982c28bf749461d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dissolveDuration: 2
+  dissolveStrength: 0
+  startColor: {r: 0, g: 0, b: 0, a: 0}
+  endColor: {r: 1, g: 0.22687149, b: 0, a: 0}
 --- !u!1 &1880902182
 GameObject:
   m_ObjectHideFlags: 0
