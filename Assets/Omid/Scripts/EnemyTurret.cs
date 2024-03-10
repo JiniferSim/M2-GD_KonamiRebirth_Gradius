@@ -11,7 +11,8 @@ public class EnemyTurret : MonoBehaviour
     public AudioClip shootSound; 
     public float bulletSpeed = 10f; 
 
-    private float lastShootTime; 
+    private float lastShootTime;
+    private float shootRadius = 15f;
     private AudioSource audioSource; 
     private Transform playerTransform;
     private SpaceshipController spaceshipController;
@@ -30,21 +31,24 @@ public class EnemyTurret : MonoBehaviour
 
     void Update()
     {
-        if (!SpaceshipController.timeStopOn)
+        if (Vector3.Distance(transform.position, playerTransform.position) < shootRadius)
         {
-            RotateGunTowardsPlayer();
-
-
-            if (Time.time - lastShootTime > shootingInterval)
+            if (!SpaceshipController.timeStopOn)
             {
+                RotateGunTowardsPlayer();
 
-                Shoot();
+
+                if (Time.time - lastShootTime > shootingInterval)
+                {
+
+                    Shoot();
 
 
-                lastShootTime = Time.time;
+                    lastShootTime = Time.time;
+                }
             }
-        }
 
+        }
     }
 
     void RotateGunTowardsPlayer()
