@@ -6,13 +6,16 @@ public class EnemyWaved : MonoBehaviour
 {
     public float amplitude = 2f; 
     public float frequency = 2f; 
-    public float speed = 2f; 
+    public float speed = 2f;
 
+    private Transform player;
     private float startTime;
     private SpaceshipController spaceshipController;
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        spaceshipController = player.GetComponent<SpaceshipController>();
         startTime = Time.time;
     }
 

@@ -317,13 +317,14 @@ public class SpaceshipController : MonoBehaviour
             {
                 powerUpCounter++;
             }
-            
+            Destroy(other.gameObject);
 
         }
         if (other.CompareTag("TimeStop"))
         {
             audioSource.PlayOneShot(timeStopSound);
             StartCoroutine(TimeStop());
+            Destroy(other.gameObject);
         }
 
     }
@@ -339,14 +340,15 @@ public class SpaceshipController : MonoBehaviour
         float rndValue = Random.value;
 
         audioSource.PlayOneShot(enemyDiyngSound);
-        if (rndValue<=0.5f && rndValue > 0.15f)
+        if (rndValue <= 0.4f && rndValue > 0.15f)
         {
             Instantiate(energyPrefab, trnfrm.position, Quaternion.identity);
         }
-        else
+        else if (rndValue <= 0.1f)
         {
             Instantiate(timeStopPrefab, trnfrm.position, Quaternion.identity);
         }
+        Debug.Log(rndValue);
     }
 
     void Shield()

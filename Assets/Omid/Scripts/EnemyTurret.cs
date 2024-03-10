@@ -21,6 +21,7 @@ public class EnemyTurret : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        spaceshipController = playerObject.GetComponent<SpaceshipController>();
         if (playerObject != null)
         {
             playerTransform = playerObject.transform;

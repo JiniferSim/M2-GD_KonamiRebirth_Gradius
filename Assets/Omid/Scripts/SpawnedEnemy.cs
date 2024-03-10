@@ -14,6 +14,7 @@ public class SpawnedEnemy : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        spaceshipController = player.GetComponent<SpaceshipController>();
     }
 
     void Update()
