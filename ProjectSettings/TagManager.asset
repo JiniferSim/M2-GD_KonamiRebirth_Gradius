@@ -9,6 +9,8 @@ TagManager:
   - Energy
   - Assistant
   - Laser
+  - Ground
+  - TimeStop
   layers:
   - Default
   - TransparentFX
