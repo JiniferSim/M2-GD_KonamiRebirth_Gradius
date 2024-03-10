@@ -201,6 +201,7 @@ public class SpaceshipController : MonoBehaviour
         }
 
     }
+
     public void Shoot()
     {
         GameObject[] assistants = GameObject.FindGameObjectsWithTag("Assistant");
