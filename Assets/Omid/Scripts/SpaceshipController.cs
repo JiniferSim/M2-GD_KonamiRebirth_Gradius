@@ -16,9 +16,11 @@ public class SpaceshipController : MonoBehaviour
     public GameObject shieldPrefab;
     public float initialFireRate = 0.5f; 
     public float backgroundScrollSpeed = 1f;
+    public float levelScrollSpeed = 1f;
     public float timeStopDuration = 10f;
     public static int score;
     public static bool timeStopOn;
+    public static bool levelStop;
     public AudioClip shootSound;
     public AudioClip laserShootSound;   
     public AudioClip missileShootSound;
@@ -34,6 +36,7 @@ public class SpaceshipController : MonoBehaviour
     private float nextFireTime;
     public static float fireRate;
     private GameObject background;
+    private GameObject level;
     private AudioSource audioSource;
     private GameObject shieldObject;
     private Renderer shieldRenderer;
@@ -65,6 +68,8 @@ public class SpaceshipController : MonoBehaviour
         fireRate = initialFireRate;
 
         background = GameObject.Find("Background");
+        level = GameObject.Find("Level");
+
 
         speedupImage = GameObject.Find("SpeedupImage").GetComponent<Image>();
         missileImage = GameObject.Find("MissileImage").GetComponent<Image>();
@@ -112,6 +117,7 @@ public class SpaceshipController : MonoBehaviour
             nextFireTime = Time.time + fireRate;
         }
 
+        ScrollLevel();
         ScrollBackground();
         Shield();
 
@@ -186,7 +192,15 @@ public class SpaceshipController : MonoBehaviour
             background.transform.Translate(Vector3.right * (horizontalBoundary * 4f));
         }
     }
+    void ScrollLevel()
+    {
+        if (!levelStop)
+        {
+            float levelScroll = levelScrollSpeed * Time.deltaTime;
+            level.transform.Translate(Vector3.left * levelScroll);
+        }
 
+    }
     public void Shoot()
     {
         GameObject[] assistants = GameObject.FindGameObjectsWithTag("Assistant");
@@ -325,6 +339,11 @@ public class SpaceshipController : MonoBehaviour
             audioSource.PlayOneShot(timeStopSound);
             StartCoroutine(TimeStop());
             Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("LevelStop"))
+        {
+            levelStop = true;
         }
 
     }
