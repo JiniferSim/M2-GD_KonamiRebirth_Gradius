@@ -1,20 +1,30 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class AssistantController : MonoBehaviour
 {
     private GameObject playerShip;
-    private float speed = 5f;
+    private static List<GameObject> allAssistants = new List<GameObject>();
+    private float speed;
     private float smoothness = 0.9f; // 0 to 1
-    private float nextFireTime;
+    private int assistantIndex = -1;
 
     void Start()
     {
+        speed = Random.Range(5,8);//for more fun
+
         playerShip = GameObject.FindGameObjectWithTag("Player");
 
         if (playerShip == null)
         {
-            Debug.LogError("Player ship not found. Make sure it has the 'Player' tag.");
+            Debug.LogError("Player ship not found");
             Destroy(gameObject);
+        }
+
+        if (!allAssistants.Contains(gameObject))
+        {
+            allAssistants.Add(gameObject);
+            assistantIndex = allAssistants.IndexOf(gameObject);
         }
 
         // Spawn
@@ -27,16 +37,28 @@ public class AssistantController : MonoBehaviour
     {
         if (playerShip != null)
         {
-            Vector3 targetPosition = Vector3.Lerp(transform.position, new Vector3(playerShip.transform.position.x, playerShip.transform.position.y+1.5f, playerShip.transform.position.z), smoothness * Time.deltaTime * speed);
+            Vector3 targetPosition = Vector3.Lerp(transform.position, new Vector3(playerShip.transform.position.x, GetAssistantYPosition(), playerShip.transform.position.z), smoothness * Time.deltaTime * speed);
 
-            transform.position = new Vector3(targetPosition.x, playerShip.transform.position.y + 1.5f, targetPosition.z);
+            transform.position = new Vector3(targetPosition.x, GetAssistantYPosition(), targetPosition.z);
             CopyPlayerActions();
         }
     }
 
-    void CopyPlayerActions()
+    float GetAssistantYPosition()
     {
 
+        if (assistantIndex > 0 && assistantIndex < allAssistants.Count)
+        {
+
+            return allAssistants[assistantIndex - 1].transform.position.y + 1.5f;
+        }
+
+        return playerShip.transform.position.y + 1.5f;
+    }
+
+    void CopyPlayerActions()
+    {
         SpaceshipController playerController = playerShip.GetComponent<SpaceshipController>();
+    }
 }
-}
+

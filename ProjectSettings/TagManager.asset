@@ -8,6 +8,10 @@ TagManager:
   - Bullet
   - Energy
   - Assistant
+  - Laser
+  - Ground
+  - TimeStop
+  - LevelStop
   layers:
   - Default
   - TransparentFX
