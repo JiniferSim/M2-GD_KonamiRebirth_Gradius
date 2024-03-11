@@ -23,7 +23,6 @@ public class SpawnedEnemy : MonoBehaviour
         {
             MoveEnemy();
         }
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,6 +33,7 @@ public class SpawnedEnemy : MonoBehaviour
             Destroy(gameObject);
             SpaceshipController.score++;
             spaceshipController.EnemyDie(transform);
+
         }
         if (other.CompareTag("Laser"))
         {

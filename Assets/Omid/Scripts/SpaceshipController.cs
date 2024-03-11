@@ -1,12 +1,13 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SpaceshipController : MonoBehaviour
 {
     public float initialSpeed = 5f;
     public float rotationSpeed = 2f;
+    public string nextSceneNumber;
     public GameObject projectilePrefab; 
     public GameObject laserPrefab;
     public GameObject missilePrefab;
@@ -81,7 +82,6 @@ public class SpaceshipController : MonoBehaviour
 
     void Update()
     {
-
         scoreText.text = "Score: " + score;
 
         // movement
@@ -313,9 +313,11 @@ public class SpaceshipController : MonoBehaviour
                 Destroy(gameObject);
                 audioSource.PlayOneShot(diyngSound);
                 audioSource.PlayOneShot(takingDamageSound);
+                SceneManager.LoadScene(nextSceneNumber);
             }
             else
             {
+                Destroy(other.gameObject);
                 barrierLife--;
                 audioSource.PlayOneShot(takingDamageSound);
             }
