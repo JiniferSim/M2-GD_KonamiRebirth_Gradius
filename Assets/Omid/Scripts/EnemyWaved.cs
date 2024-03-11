@@ -27,9 +27,8 @@ public class EnemyWaved : MonoBehaviour
 
 
             float newX = transform.position.x - Time.deltaTime * speed;
-            float newY = amplitude * waveOffset;
-
-            transform.position = new Vector3(newX, newY, transform.position.z);
+            transform.Translate(Vector3.up * waveOffset * amplitude * Time.deltaTime);
+            transform.position = new Vector3(newX, transform.position.y, transform.position.z);
         }
 
     }
