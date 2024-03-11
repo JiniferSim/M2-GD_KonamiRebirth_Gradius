@@ -12,6 +12,7 @@ TagManager:
   - Ground
   - TimeStop
   - LevelStop
+  - enemy
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - PostProcess
   - Water
   - UI
-  - 
+  - Lit
   - 
   - 
   - 

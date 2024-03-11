@@ -9,7 +9,8 @@ public class EnemyTurret : MonoBehaviour
     public float rotationSpeed = 5f; 
     public float shootingInterval = 2f; 
     public AudioClip shootSound; 
-    public float bulletSpeed = 10f; 
+    public float bulletSpeed = 10f;
+    public float shootRadius = 100f;
 
     private float lastShootTime; 
     private AudioSource audioSource; 
@@ -30,18 +31,21 @@ public class EnemyTurret : MonoBehaviour
 
     void Update()
     {
-        if (!SpaceshipController.timeStopOn)
+        if (Vector3.Distance(transform.position, playerTransform.position) < shootRadius)
         {
-            RotateGunTowardsPlayer();
-
-
-            if (Time.time - lastShootTime > shootingInterval)
+            if (!SpaceshipController.timeStopOn)
             {
+                RotateGunTowardsPlayer();
 
-                Shoot();
+
+                if (Time.time - lastShootTime > shootingInterval)
+                {
+
+                    Shoot();
 
 
-                lastShootTime = Time.time;
+                    lastShootTime = Time.time;
+                }
             }
         }
 

@@ -27,7 +27,7 @@ public class VolcanoHitbox : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            Destroy(other);
+            Destroy(other.gameObject);
 
             FlashStart();
             HP--;

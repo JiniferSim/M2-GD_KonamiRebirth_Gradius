@@ -21,7 +21,9 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
 
-        if (Vector3.Distance(transform.position, player.position) < spawnRadius)
+        if (Vector3.Distance(transform.position, player.position) < spawnRadius
+            && player.position.y > transform.position.y
+            && player.position.x < transform.position.x)
         {
             if (!spawned)
             {

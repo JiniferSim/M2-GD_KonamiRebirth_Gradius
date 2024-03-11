@@ -25,7 +25,7 @@ public class ZigzagEnemy : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            Destroy(other);
+            Destroy(other.gameObject);
             Destroy(gameObject);
         }
     }

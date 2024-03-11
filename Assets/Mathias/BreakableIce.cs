@@ -28,7 +28,7 @@ public class BreakableIce : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            Destroy(other);
+            Destroy(other.gameObject);
 
             FlashStart();
             HP--;
