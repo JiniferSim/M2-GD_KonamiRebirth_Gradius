@@ -322,7 +322,10 @@ public class SpaceshipController : MonoBehaviour
                 audioSource.PlayOneShot(takingDamageSound);
             }
         }
+        if (other.CompareTag("Enemy"))
+        {
 
+        }
         if (other.CompareTag("Energy"))
         {
             audioSource.PlayOneShot(pickingUpSound);
