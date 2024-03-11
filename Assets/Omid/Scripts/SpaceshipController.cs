@@ -116,6 +116,10 @@ public class SpaceshipController : MonoBehaviour
             Shoot();
             nextFireTime = Time.time + fireRate;
         }
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            nextFireTime = Time.time;
+        } 
 
         ScrollLevel();
         ScrollBackground();
