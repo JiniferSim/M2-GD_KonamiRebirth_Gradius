@@ -5442,7 +5442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whiteMesh: {fileID: 0}
   flashDuration: 1
-  HP: 20
+  HP: 50
 --- !u!1 &6463368041401624890
 GameObject:
   m_ObjectHideFlags: 0

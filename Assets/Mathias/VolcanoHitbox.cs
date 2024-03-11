@@ -11,10 +11,6 @@ public class VolcanoHitbox : MonoBehaviour
 
     public int HP = 20;
 
-    private void Start()
-    {
-      
-    }
     private void Update()
     {
         if (HP <= 0)
