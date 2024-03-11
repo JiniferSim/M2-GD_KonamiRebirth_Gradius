@@ -4,7 +4,7 @@ using UnityEngine;
 public class SpawnedEnemy : MonoBehaviour
 {
     public float speed = 5f;
-
+    public float activationRadius = 18f;
 
 
     private Transform player;
@@ -19,9 +19,12 @@ public class SpawnedEnemy : MonoBehaviour
 
     void Update()
     {
-        if (!SpaceshipController.timeStopOn)
+        if (Vector3.Distance(transform.position, player.position) < activationRadius)
         {
-            MoveEnemy();
+            if (!SpaceshipController.timeStopOn)
+            {
+                MoveEnemy();
+            }
         }
     }
 
