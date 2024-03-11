@@ -13,7 +13,6 @@ public class EnemyTurret : MonoBehaviour
     public float shootRadius = 100f;
 
     private float lastShootTime;
-    private float shootRadius = 15f;
     private AudioSource audioSource; 
     private Transform playerTransform;
     private SpaceshipController spaceshipController;
