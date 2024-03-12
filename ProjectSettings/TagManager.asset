@@ -12,6 +12,7 @@ TagManager:
   - Ground
   - TimeStop
   - LevelStop
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
