@@ -13,6 +13,7 @@ TagManager:
   - TimeStop
   - LevelStop
   - enemy
+  - DeadlyGround
   layers:
   - Default
   - TransparentFX

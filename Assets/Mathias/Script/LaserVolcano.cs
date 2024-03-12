@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LaserVolcano : MonoBehaviour
 {
-    public GameObject sunSphere, sunGlow, sunSphere2, sunGlow2;
+    public GameObject sunSphere, sunGlow, sunSphere2, sunGlow2, forceField1, forceField2, activeMesh, activeMesh2;
     public Camera cam;
     public float glowDelay , sphereDelay, shakeD, shotD;
 
@@ -13,17 +13,6 @@ public class LaserVolcano : MonoBehaviour
     public AudioClip shootSound;
     private AudioSource audioSource;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -41,11 +30,15 @@ public class LaserVolcano : MonoBehaviour
     {
         sunGlow.SetActive(true);
         sunGlow2.SetActive(true);
+        forceField1.GetComponent<Dissolver>().startBossBattle = true;
+        forceField2.GetComponent<Dissolver>().startBossBattle = true;
 
         Invoke("SummonSphere", sphereDelay);
     }
     private void SummonSphere()
     {
+        activeMesh.SetActive(true);
+        activeMesh2.SetActive(true);
         sunSphere.SetActive(true);
         sunSphere2.SetActive(true);
     }

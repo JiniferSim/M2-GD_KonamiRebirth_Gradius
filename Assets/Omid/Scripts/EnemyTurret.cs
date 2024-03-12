@@ -94,6 +94,10 @@ public class EnemyTurret : MonoBehaviour
             SpaceshipController.score++;
             spaceshipController.EnemyDie(transform);
         }
+        if (other.CompareTag("Player"))
+        {
+            Destroy(other.gameObject);
+        }
     }
 }
 

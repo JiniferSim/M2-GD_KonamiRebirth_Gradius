@@ -8,6 +8,10 @@ public class Projectiles : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (other.gameObject.CompareTag("DeadlyGround"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnBecameInvisible()

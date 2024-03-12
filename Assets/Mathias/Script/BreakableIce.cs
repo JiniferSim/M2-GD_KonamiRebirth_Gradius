@@ -33,6 +33,13 @@ public class BreakableIce : MonoBehaviour
             FlashStart();
             HP--;
         }
+        if (other.CompareTag("Laser"))
+        {
+            Destroy(other.gameObject);
+
+            FlashStart();
+            HP--;
+        }
     }
 
     private void SelfDestroy()

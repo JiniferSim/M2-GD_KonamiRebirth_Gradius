@@ -310,9 +310,23 @@ public class SpaceshipController : MonoBehaviour
         {
             if (barrierLife<=0)
             {
-                Destroy(gameObject);
                 audioSource.PlayOneShot(diyngSound);
                 audioSource.PlayOneShot(takingDamageSound);
+                Destroy(gameObject);
+            }
+            else
+            {
+                barrierLife--;
+                audioSource.PlayOneShot(takingDamageSound);
+            }
+        }
+        if (other.CompareTag("DeadlyGround"))
+        {
+            if (barrierLife <= 0)
+            {
+                audioSource.PlayOneShot(diyngSound);
+                audioSource.PlayOneShot(takingDamageSound);
+                Destroy(gameObject);
             }
             else
             {

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Dissolver : MonoBehaviour
 {
-    public float dissolveDuration = 2, dissolveStrength;
+    public float dissolveDuration = 3, dissolveStrength;
     public Color startColor, endColor;
-
+    public bool startBossBattle = false;
     public void StartDissolver()
     {
         StartCoroutine(dissolver());
@@ -22,6 +22,7 @@ public class Dissolver : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             dissolveStrength = Mathf.Lerp(0,1, elapsedTime/ dissolveDuration);
+            dissolveMaterial.SetFloat("_Dissolve_Strength", dissolveStrength);
 
             lerpedColor = Color.Lerp(startColor, endColor, dissolveStrength);
             dissolveMaterial.SetColor("_Color", lerpedColor);
@@ -37,7 +38,7 @@ public class Dissolver : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (startBossBattle)
         {
             StartDissolver();
         }

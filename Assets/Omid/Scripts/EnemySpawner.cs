@@ -55,5 +55,24 @@ public class EnemySpawner : MonoBehaviour
 
         Instantiate(enemyPrefab, transform.position, Quaternion.identity);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+            SpaceshipController.score++;
+        }
+        if (other.CompareTag("Laser"))
+        {
+            Destroy(gameObject);
+            SpaceshipController.score++;
+        }
+        if (other.CompareTag("Player"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
 }
 
