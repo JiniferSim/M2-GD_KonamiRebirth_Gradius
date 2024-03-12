@@ -7,6 +7,7 @@ public class SpaceshipController : MonoBehaviour
 {
     public float initialSpeed = 5f;
     public float rotationSpeed = 2f;
+    public int lives = 3;
     public string nextSceneNumber;
     public GameObject projectilePrefab; 
     public GameObject laserPrefab;
@@ -44,6 +45,7 @@ public class SpaceshipController : MonoBehaviour
     private Renderer shieldRenderer;
     private GameObject stopPointObject;
     private Vector3 lastCheckpoint;
+    private Animator animator;
 
     private Image speedupImage;
     private Image missileImage;
@@ -74,6 +76,8 @@ public class SpaceshipController : MonoBehaviour
 
         Camera mainCamera = Camera.main;
 
+        animator = GetComponent<Animator>();
+
         verticalBoundary = mainCamera.orthographicSize;
         horizontalBoundary = verticalBoundary * mainCamera.aspect;
 
@@ -102,6 +106,8 @@ public class SpaceshipController : MonoBehaviour
 
         scoreText.text = "Score: " + score;
 
+        animator.SetBool("Diyng", isDead);
+
         // movement
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -129,12 +135,12 @@ public class SpaceshipController : MonoBehaviour
             transform.Rotate(Vector3.forward, -horizontalRotation);
         }
 
-        if (Input.GetKey(KeyCode.X) && Time.time >= nextFireTime)
+        if (Input.GetKey(KeyCode.X) && Time.time >= nextFireTime && !isDead)
         {
             Shoot();
             nextFireTime = Time.time + fireRate;
         }
-        if (Input.GetKeyUp(KeyCode.X))
+        if (Input.GetKeyUp(KeyCode.X) && !isDead)
         {
             nextFireTime = Time.time;
         } 
@@ -143,17 +149,25 @@ public class SpaceshipController : MonoBehaviour
         ScrollBackground();
         Shield();
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) && !isDead)
         {
             ChooseAbility();
         }
-
-        if (isDead && Input.GetKeyDown(KeyCode.KeypadEnter))
+        Debug.Log(lastCheckpoint);
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            isDead = false;
-            Respawn();
-        }
+            if (lives > 0)
+            {
+                Debug.Log("R pressed");
+                isDead = false;
+                Respawn();
+            }
+            else 
+            {
+                SceneManager.LoadScene(nextSceneNumber);
+            }
 
+        }
         if (stopPointObject != null)
         {
             Transform stopPoint = stopPointObject.GetComponent<Transform>();
@@ -390,6 +404,7 @@ public class SpaceshipController : MonoBehaviour
         }
         if (other.CompareTag("Checkpoint"))
         {
+            Debug.Log("Checkpoint Reached");
             Transform checkpointPos = other.GetComponent<Transform>();
             lastCheckpoint = level.transform.TransformPoint(checkpointPos.localPosition);
         }
@@ -402,7 +417,9 @@ public class SpaceshipController : MonoBehaviour
     }
     void Diyng()
     {
-        Destroy(gameObject, 0.5f);
+        levelStop = true;
+        timeStopOn = true;
+        Debug.Log("Dead");
         audioSource.PlayOneShot(diyngSound);
         audioSource.PlayOneShot(takingDamageSound);
         isDead = true;
@@ -411,7 +428,12 @@ public class SpaceshipController : MonoBehaviour
 
     void Respawn()
     {
-
+        levelStop = false;
+        timeStopOn = false;
+        isDead = false;
+        Debug.Log("Respawns");
+        Destroy(initLevel);
+        level=Instantiate(initLevel);
         level.transform.position = new Vector3(lastCheckpoint.x, level.transform.position.y, level.transform.position.z);
     }
 
