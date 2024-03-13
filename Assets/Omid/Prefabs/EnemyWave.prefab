@@ -123,6 +123,7 @@ MonoBehaviour:
   amplitude: 2
   frequency: 2
   speed: 5.2
+  activationRadius: 24
 --- !u!54 &-78360715856221104
 Rigidbody:
   m_ObjectHideFlags: 0

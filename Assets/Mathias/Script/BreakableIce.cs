@@ -6,10 +6,10 @@ public class BreakableIce : MonoBehaviour
 {
     MeshRenderer meshRenderer;
     Color originalColor;
-    float flashDuration = 1f;
+    float flashDuration = 0.1f;
 
 
-    public int HP = 3;
+    public int HP = 1;
 
     private void Start()
     {
