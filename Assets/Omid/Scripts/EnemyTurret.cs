@@ -13,6 +13,7 @@ public class EnemyTurret : MonoBehaviour
     public float shootRadius = 100f;
 
     private float lastShootTime;
+    
     private AudioSource audioSource; 
     private Transform playerTransform;
     private SpaceshipController spaceshipController;
@@ -93,6 +94,10 @@ public class EnemyTurret : MonoBehaviour
             Destroy(gameObject);
             SpaceshipController.score++;
             spaceshipController.EnemyDie(transform);
+        }
+        if (other.CompareTag("Player"))
+        {
+            Destroy(other.gameObject);
         }
     }
 }
