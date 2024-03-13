@@ -4,11 +4,11 @@ using UnityEngine;
 public class SpawnedEnemy : MonoBehaviour
 {
     public float speed = 5f;
-    public float activationRadius = 18f;
 
 
     private Transform player;
     private bool moveLeft = false;
+    private bool visible;
     private SpaceshipController spaceshipController;
 
     void Start()
@@ -19,7 +19,7 @@ public class SpawnedEnemy : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.position) < activationRadius)
+        if (visible)
         {
             if (!SpaceshipController.timeStopOn)
             {
@@ -63,5 +63,14 @@ public class SpawnedEnemy : MonoBehaviour
             transform.position = new Vector3(newX, transform.position.y, transform.position.z);
             
         }
+    }
+
+    private void OnBecameVisible()
+    {
+        visible = true;
+    }
+    private void OnBecameInvisible()
+    {
+        visible = false;
     }
 }

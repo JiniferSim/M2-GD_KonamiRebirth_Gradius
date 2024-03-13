@@ -266,7 +266,6 @@ public class SpaceshipController : MonoBehaviour
             foreach (GameObject assistant in assistants)
             {
                 GameObject laser = Instantiate(laserPrefab, assistant.transform.position, new Quaternion(0f, 0f, 0f, 0f));
-
                 Vector3 laserDirection = assistant.transform.right;
                 laser.GetComponent<Rigidbody>().velocity = laserDirection * speed * 2f;
                 audioSource.PlayOneShot(laserShootSound);
@@ -444,11 +443,14 @@ public class SpaceshipController : MonoBehaviour
         audioSource.PlayOneShot(enemyDiyngSound);
         if (rndValue <= 0.4f && rndValue > 0.15f)
         {
-            Instantiate(energyPrefab, trnfrm.position, Quaternion.identity);
+            GameObject energy = Instantiate(energyPrefab, trnfrm.position, Quaternion.identity);
+            energy.transform.parent = level.transform;
+
         }
         else if (rndValue <= 0.1f)
         {
-            Instantiate(timeStopPrefab, trnfrm.position, Quaternion.identity);
+            GameObject timeStopSphere = Instantiate(timeStopPrefab, trnfrm.position, Quaternion.identity);
+            timeStopSphere.transform.parent = level.transform;
         }
         Debug.Log(rndValue);
     }

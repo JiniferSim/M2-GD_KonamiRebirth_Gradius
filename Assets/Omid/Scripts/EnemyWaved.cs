@@ -7,10 +7,10 @@ public class EnemyWaved : MonoBehaviour
     public float amplitude = 2f; 
     public float frequency = 2f; 
     public float speed = 2f;
-    public float activationRadius = 18f;
 
     private Transform player;
     private float startTime;
+    private bool visible;
     private SpaceshipController spaceshipController;
 
     void Start()
@@ -22,7 +22,7 @@ public class EnemyWaved : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.position) < activationRadius)
+        if (visible)
         {
             if (!SpaceshipController.timeStopOn)
             {
@@ -35,6 +35,16 @@ public class EnemyWaved : MonoBehaviour
             }
         }
     }
+
+    private void OnBecameVisible()
+    {
+        visible = true;
+    }
+    private void OnBecameInvisible()
+    {
+        visible = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Bullet"))
