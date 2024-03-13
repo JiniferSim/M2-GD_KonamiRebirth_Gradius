@@ -12,7 +12,8 @@ public class EnemyTurret : MonoBehaviour
     public float bulletSpeed = 10f;
     public float shootRadius = 100f;
 
-    private float lastShootTime; 
+    private float lastShootTime;
+    private float shootRadius = 15f;
     private AudioSource audioSource; 
     private Transform playerTransform;
     private SpaceshipController spaceshipController;
@@ -47,8 +48,8 @@ public class EnemyTurret : MonoBehaviour
                     lastShootTime = Time.time;
                 }
             }
-        }
 
+        }
     }
 
     void RotateGunTowardsPlayer()

@@ -7,6 +7,7 @@ public class EnemyWaved : MonoBehaviour
     public float amplitude = 2f; 
     public float frequency = 2f; 
     public float speed = 2f;
+    public float activationRadius = 18f;
 
     private Transform player;
     private float startTime;
@@ -21,17 +22,18 @@ public class EnemyWaved : MonoBehaviour
 
     void Update()
     {
-        if (!SpaceshipController.timeStopOn)
+        if (Vector3.Distance(transform.position, player.position) < activationRadius)
         {
-            float waveOffset = Mathf.Sin((Time.time - startTime) * frequency);
+            if (!SpaceshipController.timeStopOn)
+            {
+                float waveOffset = Mathf.Sin((Time.time - startTime) * frequency);
 
 
-            float newX = transform.position.x - Time.deltaTime * speed;
-            float newY = amplitude * waveOffset;
-
-            transform.position = new Vector3(newX, newY, transform.position.z);
+                float newX = transform.position.x - Time.deltaTime * speed;
+                transform.Translate(Vector3.up * waveOffset * amplitude * Time.deltaTime);
+                transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+            }
         }
-
     }
     private void OnTriggerEnter(Collider other)
     {

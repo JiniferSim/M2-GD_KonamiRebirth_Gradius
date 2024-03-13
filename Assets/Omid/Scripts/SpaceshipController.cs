@@ -1,12 +1,14 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SpaceshipController : MonoBehaviour
 {
     public float initialSpeed = 5f;
     public float rotationSpeed = 2f;
+    public int lives = 3;
+    public string nextSceneNumber;
     public GameObject projectilePrefab; 
     public GameObject laserPrefab;
     public GameObject missilePrefab;
@@ -37,9 +39,13 @@ public class SpaceshipController : MonoBehaviour
     public static float fireRate;
     private GameObject background;
     private GameObject level;
+    private GameObject initLevel;
     private AudioSource audioSource;
     private GameObject shieldObject;
     private Renderer shieldRenderer;
+    private GameObject stopPointObject;
+    private Vector3 lastCheckpoint;
+    private Animator animator;
 
     private Image speedupImage;
     private Image missileImage;
@@ -55,11 +61,22 @@ public class SpaceshipController : MonoBehaviour
     private int optionCounter;
     private int speedCounter;
     private bool shieldOn;
+    private bool isDead;
+
+    private void Awake()
+    {
+        initLevel = GameObject.Find("Level");
+        level = Instantiate(initLevel);
+        Destroy(initLevel);
+    }
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
 
         Camera mainCamera = Camera.main;
+
+        animator = GetComponent<Animator>();
 
         verticalBoundary = mainCamera.orthographicSize;
         horizontalBoundary = verticalBoundary * mainCamera.aspect;
@@ -68,8 +85,9 @@ public class SpaceshipController : MonoBehaviour
         fireRate = initialFireRate;
 
         background = GameObject.Find("Background");
-        level = GameObject.Find("Level");
 
+
+        stopPointObject = GameObject.FindWithTag("LevelStop");
 
         speedupImage = GameObject.Find("SpeedupImage").GetComponent<Image>();
         missileImage = GameObject.Find("MissileImage").GetComponent<Image>();
@@ -81,8 +99,14 @@ public class SpaceshipController : MonoBehaviour
 
     void Update()
     {
+        if (level == null)
+        {
+            level = Instantiate(initLevel);
+        }
 
         scoreText.text = "Score: " + score;
+
+        animator.SetBool("Diyng", isDead);
 
         // movement
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -111,19 +135,52 @@ public class SpaceshipController : MonoBehaviour
             transform.Rotate(Vector3.forward, -horizontalRotation);
         }
 
-        if (Input.GetKey(KeyCode.X) && Time.time >= nextFireTime)
+        if (Input.GetKey(KeyCode.X) && Time.time >= nextFireTime && !isDead)
         {
             Shoot();
             nextFireTime = Time.time + fireRate;
         }
+        if (Input.GetKeyUp(KeyCode.X) && !isDead)
+        {
+            nextFireTime = Time.time;
+        } 
 
         ScrollLevel();
         ScrollBackground();
         Shield();
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) && !isDead)
         {
             ChooseAbility();
+        }
+        Debug.Log(lastCheckpoint);
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (lives > 0)
+            {
+                Debug.Log("R pressed");
+                isDead = false;
+                Respawn();
+            }
+            else 
+            {
+                SceneManager.LoadScene(nextSceneNumber);
+            }
+
+        }
+        if (stopPointObject != null)
+        {
+            Transform stopPoint = stopPointObject.GetComponent<Transform>();
+            Vector3 stopPointWorldPosition = level.transform.TransformPoint(stopPoint.localPosition);
+
+            if (stopPointWorldPosition.x <= 0f)
+            {
+                levelStop = true;
+            }
+        }
+        else
+        {
+            stopPointObject = GameObject.FindWithTag("LevelStop");
         }
 
         // Powerup colors
@@ -199,7 +256,6 @@ public class SpaceshipController : MonoBehaviour
             float levelScroll = levelScrollSpeed * Time.deltaTime;
             level.transform.Translate(Vector3.left * levelScroll);
         }
-
     }
 
     public void Shoot()
@@ -310,29 +366,19 @@ public class SpaceshipController : MonoBehaviour
         {
             if (barrierLife<=0)
             {
-                audioSource.PlayOneShot(diyngSound);
-                audioSource.PlayOneShot(takingDamageSound);
-                Destroy(gameObject);
+                Diyng();
             }
             else
             {
+                Destroy(other.gameObject);
                 barrierLife--;
                 audioSource.PlayOneShot(takingDamageSound);
             }
         }
-        if (other.CompareTag("DeadlyGround"))
+
+        if (other.CompareTag("Ground"))
         {
-            if (barrierLife <= 0)
-            {
-                audioSource.PlayOneShot(diyngSound);
-                audioSource.PlayOneShot(takingDamageSound);
-                Destroy(gameObject);
-            }
-            else
-            {
-                barrierLife--;
-                audioSource.PlayOneShot(takingDamageSound);
-            }
+            Diyng();
         }
 
         if (other.CompareTag("Energy"))
@@ -349,24 +395,46 @@ public class SpaceshipController : MonoBehaviour
             Destroy(other.gameObject);
 
         }
+
         if (other.CompareTag("TimeStop"))
         {
             audioSource.PlayOneShot(timeStopSound);
             StartCoroutine(TimeStop());
             Destroy(other.gameObject);
         }
-
-        if (other.CompareTag("LevelStop"))
+        if (other.CompareTag("Checkpoint"))
         {
-            levelStop = true;
+            Debug.Log("Checkpoint Reached");
+            Transform checkpointPos = other.GetComponent<Transform>();
+            lastCheckpoint = level.transform.TransformPoint(checkpointPos.localPosition);
         }
-
     }
     IEnumerator TimeStop()
     {
         timeStopOn = true;
         yield return new WaitForSeconds(timeStopDuration);
         timeStopOn = false;
+    }
+    void Diyng()
+    {
+        levelStop = true;
+        timeStopOn = true;
+        Debug.Log("Dead");
+        audioSource.PlayOneShot(diyngSound);
+        audioSource.PlayOneShot(takingDamageSound);
+        isDead = true;
+
+    }
+
+    void Respawn()
+    {
+        levelStop = false;
+        timeStopOn = false;
+        isDead = false;
+        Debug.Log("Respawns");
+        Destroy(initLevel);
+        level=Instantiate(initLevel);
+        level.transform.position = new Vector3(lastCheckpoint.x, level.transform.position.y, level.transform.position.z);
     }
 
     public void EnemyDie(Transform trnfrm)
