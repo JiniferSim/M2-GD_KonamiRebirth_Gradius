@@ -24,7 +24,7 @@ public class VolcanoHitbox : MonoBehaviour
             
             deathMeshR.GetComponent<Dissolver>().startBossBattle = true;
             deathMeshL.GetComponent<Dissolver>().startBossBattle = true;
-            SpaceshipController.score += 5000;
+            
             Invoke("SelfDestroy", 1f);
         }
     }
@@ -52,6 +52,7 @@ public class VolcanoHitbox : MonoBehaviour
     {
         Instantiate(sunDeath, laserSun.transform.position, Quaternion.identity);
         laserSun.SetActive(false);
+        SpaceshipController.score += 5000;
         Destroy(gameObject);
     }
 
