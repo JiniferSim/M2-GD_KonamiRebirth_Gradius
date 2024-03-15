@@ -63,15 +63,10 @@ public class SpaceshipController : MonoBehaviour
     private bool shieldOn;
     private bool isDead;
 
-    private void Awake()
-    {
-        initLevel = GameObject.Find("Level");
-        level = Instantiate(initLevel);
-        Destroy(initLevel);
-    }
-
     void Start()
     {
+        level = GameObject.Find("Level");
+
         audioSource = GetComponent<AudioSource>();
 
         Camera mainCamera = Camera.main;
@@ -99,41 +94,40 @@ public class SpaceshipController : MonoBehaviour
 
     void Update()
     {
-        if (level == null)
-        {
-            level = Instantiate(initLevel);
-        }
-
         scoreText.text = "Score: " + score;
 
         animator.SetBool("Diyng", isDead);
 
         // movement
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;
-        Vector3 newPosition = transform.position + movement;
-
-        // Boundaries
-        newPosition.x = Mathf.Clamp(newPosition.x, -horizontalBoundary, horizontalBoundary);
-        newPosition.y = Mathf.Clamp(newPosition.y, -verticalBoundary, verticalBoundary);
-
-        transform.position = newPosition;
-
-        // rotation
-        if (verticalInput != 0f)
+        if (!isDead)
         {
-            Quaternion toRotation = Quaternion.Euler(verticalInput > 0f ? 45f : -45f, 0f, 0f);
-            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
-        }
-        else
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, rotationSpeed * Time.deltaTime);
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
 
-            float horizontalRotation = horizontalInput * rotationSpeed * Time.deltaTime;
-            transform.Rotate(Vector3.forward, -horizontalRotation);
+            Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;
+            Vector3 newPosition = transform.position + movement;
+
+            // Boundaries
+            newPosition.x = Mathf.Clamp(newPosition.x, -horizontalBoundary, horizontalBoundary);
+            newPosition.y = Mathf.Clamp(newPosition.y, -verticalBoundary, verticalBoundary);
+
+            transform.position = newPosition;
+
+            // rotation
+            if (verticalInput != 0f)
+            {
+                Quaternion toRotation = Quaternion.Euler(verticalInput > 0f ? 45f : -45f, 0f, 0f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, rotationSpeed * Time.deltaTime);
+
+                float horizontalRotation = horizontalInput * rotationSpeed * Time.deltaTime;
+                transform.Rotate(Vector3.forward, -horizontalRotation);
+            }
         }
+
 
         if (Input.GetKey(KeyCode.X) && Time.time >= nextFireTime && !isDead)
         {
@@ -431,9 +425,6 @@ public class SpaceshipController : MonoBehaviour
         timeStopOn = false;
         isDead = false;
         Debug.Log("Respawns");
-        Destroy(initLevel);
-        level=Instantiate(initLevel);
-        level.transform.position = new Vector3(lastCheckpoint.x, level.transform.position.y, level.transform.position.z);
     }
 
     public void EnemyDie(Transform trnfrm)
