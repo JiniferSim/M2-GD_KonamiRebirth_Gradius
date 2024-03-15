@@ -425,6 +425,7 @@ public class SpaceshipController : MonoBehaviour
         timeStopOn = false;
         isDead = false;
         Debug.Log("Respawns");
+        SceneManager.LoadScene(nextSceneNumber);
     }
 
     public void EnemyDie(Transform trnfrm)
