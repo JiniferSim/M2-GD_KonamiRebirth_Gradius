@@ -148,7 +148,7 @@ namespace TMPro.Examples
                 Vector3 ascentlineStart = m_Transform.TransformPoint(new Vector3(origin, ascentline, 0));
                 Vector3 ascentlineEnd = m_Transform.TransformPoint(new Vector3(advance, ascentline, 0));
 
-                Handles.color = Color.cyan;
+                Handles.color = Color.grey;
                 Handles.DrawDottedLine(ascentlineStart, ascentlineEnd, dottedLineSize);
 
                 // Draw Cap Height & Mean line
@@ -163,11 +163,11 @@ namespace TMPro.Examples
                 if (characterInfo.isVisible)
                 {
                     // Cap line
-                    Handles.color = Color.cyan;
+                    Handles.color = Color.grey;
                     Handles.DrawDottedLine(capHeightStart, capHeightEnd, dottedLineSize);
 
                     // Mean line
-                    Handles.color = Color.cyan;
+                    Handles.color = Color.grey;
                     Handles.DrawDottedLine(meanlineStart, meanlineEnd, dottedLineSize);
                 }
 
@@ -175,19 +175,19 @@ namespace TMPro.Examples
                 Vector3 baselineStart = m_Transform.TransformPoint(new Vector3(origin, baseline, 0));
                 Vector3 baselineEnd = m_Transform.TransformPoint(new Vector3(advance, baseline, 0));
 
-                Handles.color = Color.cyan;
+                Handles.color = Color.grey;
                 Handles.DrawDottedLine(baselineStart, baselineEnd, dottedLineSize);
 
                 //Draw Descent line
                 Vector3 descentlineStart = m_Transform.TransformPoint(new Vector3(origin, descentline, 0));
                 Vector3 descentlineEnd = m_Transform.TransformPoint(new Vector3(advance, descentline, 0));
 
-                Handles.color = Color.cyan;
+                Handles.color = Color.grey;
                 Handles.DrawDottedLine(descentlineStart, descentlineEnd, dottedLineSize);
 
                 // Draw Origin
                 Vector3 originPosition = m_Transform.TransformPoint(new Vector3(origin, baseline, 0));
-                DrawCrosshair(originPosition, 0.05f / m_ScaleMultiplier, Color.cyan);
+                DrawCrosshair(originPosition, 0.05f / m_ScaleMultiplier, Color.grey);
 
                 // Draw Horizontal Advance
                 Vector3 advancePosition = m_Transform.TransformPoint(new Vector3(advance, baseline, 0));
@@ -383,7 +383,7 @@ namespace TMPro.Examples
                 float maxAscender = -Mathf.Infinity;
                 float minDescender = Mathf.Infinity;
 
-                Color32 linkColor = Color.cyan;
+                Color32 linkColor = Color.grey;
 
                 // Iterate through each character of the link text
                 for (int j = 0; j < linkInfo.linkTextLength; j++)

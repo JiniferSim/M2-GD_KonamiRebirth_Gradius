@@ -181,53 +181,53 @@ public class SpaceshipController : MonoBehaviour
         switch (powerUpCounter)
         {
             case 0:
-                speedupImage.color = Color.blue;
-                missileImage.color = Color.blue;
-                laserImage.color = Color.blue;
-                optionImage.color = Color.blue;
-                barrierImage.color = Color.blue;
+                speedupImage.color = Color.gray;
+                missileImage.color = Color.grey;
+                laserImage.color = Color.grey;
+                optionImage.color = Color.grey;
+                barrierImage.color = Color.grey;
                 break;
             case 1:
                 speedupImage.color = Color.yellow;
-                missileImage.color = Color.blue;
-                laserImage.color = Color.blue;
-                optionImage.color = Color.blue;
-                barrierImage.color = Color.blue;
+                missileImage.color = Color.grey;
+                laserImage.color = Color.grey;
+                optionImage.color = Color.grey;
+                barrierImage.color = Color.grey;
                 break;
             case 2:
-                speedupImage.color = Color.blue;
+                speedupImage.color = Color.grey;
                 missileImage.color = Color.yellow;
-                laserImage.color = Color.blue;
-                optionImage.color = Color.blue;
-                barrierImage.color = Color.blue;
+                laserImage.color = Color.grey;
+                optionImage.color = Color.grey;
+                barrierImage.color = Color.grey;
                 break;
             case 3:
-                speedupImage.color = Color.blue;
-                missileImage.color = Color.blue;
+                speedupImage.color = Color.grey;
+                missileImage.color = Color.grey;
                 laserImage.color = Color.yellow;
-                optionImage.color = Color.blue;
-                barrierImage.color = Color.blue;
+                optionImage.color = Color.grey;
+                barrierImage.color = Color.grey;
                 break;
             case 4:
-                speedupImage.color = Color.blue;
-                missileImage.color = Color.blue;
-                laserImage.color = Color.blue;
+                speedupImage.color = Color.grey;
+                missileImage.color = Color.grey;
+                laserImage.color = Color.grey;
                 optionImage.color = Color.yellow;
-                barrierImage.color = Color.blue;
+                barrierImage.color = Color.grey;
                 break;
             case 5:
-                speedupImage.color = Color.blue;
-                missileImage.color = Color.blue;
-                laserImage.color = Color.blue;
-                optionImage.color = Color.blue;
+                speedupImage.color = Color.grey;
+                missileImage.color = Color.grey;
+                laserImage.color = Color.grey;
+                optionImage.color = Color.grey;
                 barrierImage.color = Color.yellow;
                 break;
             default:
-                speedupImage.color = Color.blue;
-                missileImage.color = Color.blue;
-                laserImage.color = Color.blue;
-                optionImage.color = Color.blue;
-                barrierImage.color = Color.blue;
+                speedupImage.color = Color.grey;
+                missileImage.color = Color.grey;
+                laserImage.color = Color.grey;
+                optionImage.color = Color.grey;
+                barrierImage.color = Color.grey;
                 break;
         }
     }
