@@ -73,7 +73,7 @@ public class SpaceshipController : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
-        verticalBoundary = mainCamera.orthographicSize;
+        verticalBoundary = mainCamera.orthographicSize - 0.4f;
         horizontalBoundary = verticalBoundary * mainCamera.aspect;
 
         speed = initialSpeed;
