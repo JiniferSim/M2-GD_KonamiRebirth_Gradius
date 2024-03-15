@@ -10,6 +10,8 @@ public class SpaceshipController : MonoBehaviour
     public float rotationSpeed = 2f;
     public int lives = 3;
     public string nextSceneNumber;
+    public ParticleSystem playerDeath;
+    public GameObject ship;
     public GameObject projectilePrefab; 
     public GameObject laserPrefab;
     public GameObject missilePrefab;
@@ -153,6 +155,7 @@ public class SpaceshipController : MonoBehaviour
         {
             if (lives > 0)
             {
+
                 Debug.Log("R pressed");
                 isDead = false;
                 Respawn();
@@ -419,6 +422,9 @@ public class SpaceshipController : MonoBehaviour
         audioSource.PlayOneShot(diyngSound);
         audioSource.PlayOneShot(takingDamageSound);
         isDead = true;
+        Invoke("Respawn", 2f);
+        ship.SetActive(false);
+        Instantiate(playerDeath, transform.position, Quaternion.identity);
 
     }
 
@@ -436,13 +442,13 @@ public class SpaceshipController : MonoBehaviour
         float rndValue = Random.value;
 
         audioSource.PlayOneShot(enemyDiyngSound);
-        if (rndValue <= 0.4f && rndValue > 0.15f)
+        if (rndValue <= 0.4f && rndValue > 0.1f)
         {
             GameObject energy = Instantiate(energyPrefab, trnfrm.position, Quaternion.identity);
             energy.transform.parent = level.transform;
 
         }
-        else if (rndValue <= 0.1f)
+        else if (rndValue <= 0.05f)
         {
             GameObject timeStopSphere = Instantiate(timeStopPrefab, trnfrm.position, Quaternion.identity);
             timeStopSphere.transform.parent = level.transform;
