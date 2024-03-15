@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class LaserVolcano : MonoBehaviour
@@ -13,6 +14,15 @@ public class LaserVolcano : MonoBehaviour
     public AudioClip shootSound;
     private AudioSource audioSource;
     // Start is called before the first frame update
+
+    void Update()
+    {
+        if (sunSphere == null && sunSphere2 == null)
+        {
+            Debug.Log("Fuckup");
+            Invoke("MoveOn", 2f);
+        }   
+    }
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -25,6 +35,13 @@ public class LaserVolcano : MonoBehaviour
         }
     }
 
+
+    private void MoveOn()
+        
+    {
+            SpaceshipController.levelStop = false;
+    }
+    
 
     private void SummonGlow()
     {

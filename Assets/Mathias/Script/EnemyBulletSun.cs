@@ -7,7 +7,7 @@ public class EnemyBulletSun : MonoBehaviour
     public ParticleSystem burst;
     void Start()
     {
-        Invoke("SelfDestroy", 15);
+        Invoke("SelfDestroy", 10);
     }
     //Instantiate an Fx burst
     private void OnTriggerEnter(Collider other)
@@ -24,7 +24,7 @@ public class EnemyBulletSun : MonoBehaviour
         {
             Destroy(other.gameObject);
             Destroy(gameObject);
-            SpaceshipController.score++;
+            SpaceshipController.score+= 5;
         }
         if (other.CompareTag("Laser"))
         {

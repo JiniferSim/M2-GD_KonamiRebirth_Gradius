@@ -93,13 +93,13 @@ public class EnemyTurret : MonoBehaviour
         {
             Destroy(other.gameObject);
             Destroy(gameObject);
-            SpaceshipController.score++;
+            SpaceshipController.score += 200;
             spaceshipController.EnemyDie(transform);
         }
         if (other.CompareTag("Laser"))
         {
             Destroy(gameObject);
-            SpaceshipController.score++;
+            SpaceshipController.score += 200;
             spaceshipController.EnemyDie(transform);
         }
     }

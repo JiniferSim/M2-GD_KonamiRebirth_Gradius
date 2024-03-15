@@ -65,12 +65,12 @@ public class EnemySpawner : MonoBehaviour
         {
             Destroy(other.gameObject);
             Destroy(gameObject);
-            SpaceshipController.score++;
+            SpaceshipController.score += 500;
         }
         if (other.CompareTag("Laser"))
         {
             Destroy(gameObject);
-            SpaceshipController.score++;
+            SpaceshipController.score += 500;
         }
         if (other.CompareTag("Player"))
         {

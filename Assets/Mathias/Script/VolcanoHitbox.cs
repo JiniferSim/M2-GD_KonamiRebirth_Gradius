@@ -7,7 +7,7 @@ public class VolcanoHitbox : MonoBehaviour
     public ParticleSystem sunDeath;
     public GameObject whiteMesh, laserSun, mainDeathObj, deathMeshL, deathMeshR, deathCube;
     public float flashDuration = 1f;
-
+    public bool died;
 
     public int HP = 20;
 
@@ -15,17 +15,20 @@ public class VolcanoHitbox : MonoBehaviour
     {
         if (HP <= 0)
         {
+            
             //Instantiate(deathMeshR, deathMeshR.transform.position, Quaternion.identity);
             //Instantiate(deathMeshL, deathMeshL.transform.position, Quaternion.identity);
             mainDeathObj.SetActive(true);
             deathMeshR.SetActive(true);
             deathMeshL.SetActive(true);
-            Instantiate(deathCube, deathCube.transform.position, Quaternion.identity);
-            
+            deathCube.SetActive(true);
+
+            deathCube.GetComponent<Dissolver>().startBossBattle = true;
             deathMeshR.GetComponent<Dissolver>().startBossBattle = true;
             deathMeshL.GetComponent<Dissolver>().startBossBattle = true;
             
             Invoke("SelfDestroy", 1f);
+            HP = 1;
         }
     }
 
@@ -50,9 +53,12 @@ public class VolcanoHitbox : MonoBehaviour
 
     private void SelfDestroy()
     {
-        Instantiate(sunDeath, laserSun.transform.position, Quaternion.identity);
-        laserSun.SetActive(false);
+        died = true;
         SpaceshipController.score += 5000;
+        ParticleSystem sunParticlo = Instantiate(sunDeath, laserSun.transform.position, Quaternion.identity);
+        Destroy(sunParticlo, 10f);
+        laserSun.SetActive(false);
+        
         Destroy(gameObject);
     }
 
