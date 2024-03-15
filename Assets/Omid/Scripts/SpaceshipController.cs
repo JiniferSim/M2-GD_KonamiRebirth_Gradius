@@ -9,7 +9,7 @@ public class SpaceshipController : MonoBehaviour
     public float initialSpeed = 5f;
     public float rotationSpeed = 2f;
     public int lives = 3;
-    public string nextSceneNumber;
+    public int nextSceneNumber;
     public ParticleSystem playerDeath;
     public GameObject ship;
     public GameObject projectilePrefab; 
