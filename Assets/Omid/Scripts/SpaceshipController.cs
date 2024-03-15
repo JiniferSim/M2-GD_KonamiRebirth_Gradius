@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -170,7 +171,9 @@ public class SpaceshipController : MonoBehaviour
             if (stopPointWorldPosition.x <= 0f)
             {
                 levelStop = true;
+                Destroy(stopPoint.gameObject);
             }
+            Debug.Log(stopPointWorldPosition);
         }
         else
         {
