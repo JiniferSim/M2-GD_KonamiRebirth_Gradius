@@ -51,13 +51,13 @@ public class EnemyWaved : MonoBehaviour
         {
             Destroy(other.gameObject);
             Destroy(gameObject);
-            SpaceshipController.score++;
+            SpaceshipController.score += 100;
             spaceshipController.EnemyDie(transform);
         }
         if (other.CompareTag("Laser"))
         {
             Destroy(gameObject);
-            SpaceshipController.score++;
+            SpaceshipController.score += 100;
             spaceshipController.EnemyDie(transform);
         }
     }

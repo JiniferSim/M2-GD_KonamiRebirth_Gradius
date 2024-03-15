@@ -24,7 +24,7 @@ public class EnemyBulletSun : MonoBehaviour
         {
             Destroy(other.gameObject);
             Destroy(gameObject);
-            SpaceshipController.score++;
+            SpaceshipController.score+= 5;
         }
         if (other.CompareTag("Laser"))
         {
