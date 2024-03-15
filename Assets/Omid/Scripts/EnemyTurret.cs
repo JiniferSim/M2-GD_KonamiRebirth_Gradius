@@ -9,11 +9,10 @@ public class EnemyTurret : MonoBehaviour
     public float rotationSpeed = 5f; 
     public float shootingInterval = 2f; 
     public AudioClip shootSound; 
-    public float bulletSpeed = 10f;
-    public float shootRadius = 100f;
+    public float bulletSpeed = 10f; 
 
     private float lastShootTime;
-    
+    private bool visible;
     private AudioSource audioSource; 
     private Transform playerTransform;
     private SpaceshipController spaceshipController;
@@ -32,7 +31,7 @@ public class EnemyTurret : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(transform.position, playerTransform.position) < shootRadius)
+        if (visible)
         {
             if (!SpaceshipController.timeStopOn)
             {
@@ -79,6 +78,14 @@ public class EnemyTurret : MonoBehaviour
             audioSource.PlayOneShot(shootSound);
         }
     }
+    private void OnBecameVisible()
+    {
+        visible = true;
+    }
+    private void OnBecameInvisible()
+    {
+        visible = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -94,10 +101,6 @@ public class EnemyTurret : MonoBehaviour
             Destroy(gameObject);
             SpaceshipController.score++;
             spaceshipController.EnemyDie(transform);
-        }
-        if (other.CompareTag("Player"))
-        {
-            Destroy(other.gameObject);
         }
     }
 }
