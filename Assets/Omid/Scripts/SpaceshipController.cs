@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -73,7 +74,7 @@ public class SpaceshipController : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
-        verticalBoundary = mainCamera.orthographicSize;
+        verticalBoundary = mainCamera.orthographicSize - 0.4f;
         horizontalBoundary = verticalBoundary * mainCamera.aspect;
 
         speed = initialSpeed;
@@ -170,7 +171,9 @@ public class SpaceshipController : MonoBehaviour
             if (stopPointWorldPosition.x <= 0f)
             {
                 levelStop = true;
+                Destroy(stopPoint.gameObject);
             }
+            Debug.Log(stopPointWorldPosition);
         }
         else
         {

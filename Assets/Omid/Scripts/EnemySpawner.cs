@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
-    public float spawnRadius = 5f;
+    public float spawnRadius = 18f;
     public int numberOfEnemies = 3;
     public float spawnInterval = 0.2f;
 
@@ -52,9 +52,12 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-
-        Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        GameObject level = GameObject.Find("Level");
+        GameObject spawnedEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        spawnedEnemy.transform.parent = level.transform;
     }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
