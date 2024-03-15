@@ -411,7 +411,7 @@ public class SpaceshipController : MonoBehaviour
         yield return new WaitForSeconds(timeStopDuration);
         timeStopOn = false;
     }
-    void Diyng()
+    public void Diyng()
     {
         levelStop = true;
         timeStopOn = true;
