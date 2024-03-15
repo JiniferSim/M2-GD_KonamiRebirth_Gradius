@@ -3178,6 +3178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 140176797}
   - component: {fileID: 140176798}
+  - component: {fileID: 140176799}
   m_Layer: 0
   m_Name: TriggerVolcano
   m_TagString: Untagged
@@ -3221,6 +3222,35 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.81, y: 10.63, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &140176799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140176796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506086139da13c1478b16546c617fae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sunSphere: {fileID: 0}
+  sunGlow: {fileID: 0}
+  sunSphere2: {fileID: 0}
+  sunGlow2: {fileID: 0}
+  forceField1: {fileID: 0}
+  forceField2: {fileID: 0}
+  activeMesh: {fileID: 0}
+  activeMesh2: {fileID: 0}
+  cam: {fileID: 0}
+  glowDelay: 0
+  sphereDelay: 0
+  shakeD: 0
+  shotD: 0
+  bulletPrefab: {fileID: 0}
+  bulletSpeed: 0
+  shotDelay: 0
+  shootSound: {fileID: 0}
 --- !u!1 &143060241
 GameObject:
   m_ObjectHideFlags: 0
@@ -8600,6 +8630,10 @@ PrefabInstance:
       propertyPath: flashDuration
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 4033473044927669592, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5728653444220453020, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10848
@@ -8645,6 +8679,10 @@ PrefabInstance:
       value: LaserVolcano
       objectReference: {fileID: 0}
     - target: {fileID: 7905500557269312637, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9134481441219921506, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -19607,7 +19645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1007946711007024762, guid: 119c3ece3989b824b99e794323fa96cb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 156.89
+      value: 170.75
       objectReference: {fileID: 0}
     - target: {fileID: 1007946711007024762, guid: 119c3ece3989b824b99e794323fa96cb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -24919,6 +24957,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1670847730}
     - target: {fileID: 743736867626592692, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
+      propertyPath: deathMeshL
+      value: 
+      objectReference: {fileID: 1873383760}
+    - target: {fileID: 743736867626592692, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
+      propertyPath: deathMeshR
+      value: 
+      objectReference: {fileID: 1839791750}
+    - target: {fileID: 743736867626592692, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
+      propertyPath: mainDeathObj
+      value: 
+      objectReference: {fileID: 1444375469}
+    - target: {fileID: 743736867626592692, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
       propertyPath: flashDuration
       value: 0.1
       objectReference: {fileID: 0}
@@ -24965,6 +25015,14 @@ PrefabInstance:
     - target: {fileID: 5731003110746096829, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
       propertyPath: m_Name
       value: LaserVolcano (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773089008751717352, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7442464844393640507, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7905500557269312637, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
       propertyPath: m_IsActive
@@ -38902,6 +38960,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b14529ca926db74a82a313c52b8e17f, type: 3}
+--- !u!1 &1444375469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7442464844393640507, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
+  m_PrefabInstance: {fileID: 939109024}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1444429287 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4149905089140482, guid: a752dd35fc5bc254382b9f598d3bd687, type: 3}
@@ -49858,6 +49921,11 @@ Transform:
   - {fileID: 1409088592}
   m_Father: {fileID: 376054196}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1839791750 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 12153951981093112, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
+  m_PrefabInstance: {fileID: 939109024}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1840638935 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4168342870535216, guid: 873ac25ac1e31f64e935305e5b6b41d1, type: 3}
@@ -50532,6 +50600,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1227574949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1873383760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2337711729384028383, guid: bbb5c75ba3973b5429b857a45280c5d8, type: 3}
+  m_PrefabInstance: {fileID: 939109024}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1876319521
 PrefabInstance:
   m_ObjectHideFlags: 0
