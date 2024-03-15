@@ -7,7 +7,7 @@ public class EnemyBulletSun : MonoBehaviour
     public ParticleSystem burst;
     void Start()
     {
-        Invoke("SelfDestroy", 15);
+        Invoke("SelfDestroy", 10);
     }
     //Instantiate an Fx burst
     private void OnTriggerEnter(Collider other)
