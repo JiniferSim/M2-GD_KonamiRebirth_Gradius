@@ -68,6 +68,7 @@ public class SpaceshipController : MonoBehaviour
 
     void Start()
     {
+        score = 0;
         level = GameObject.Find("Level");
 
         audioSource = GetComponent<AudioSource>();
