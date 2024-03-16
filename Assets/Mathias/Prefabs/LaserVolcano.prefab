@@ -5786,7 +5786,8 @@ MonoBehaviour:
   deathMeshR: {fileID: 12153951981093112}
   deathCube: {fileID: 6773089008751717352}
   flashDuration: 1
-  HP: 20
+  died: 0
+  HP: 50
 --- !u!1 &6463368041401624890
 GameObject:
   m_ObjectHideFlags: 0
