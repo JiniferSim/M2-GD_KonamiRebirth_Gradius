@@ -97,6 +97,7 @@ public class SpaceshipController : MonoBehaviour
 
     void Update()
     {
+        
         scoreText.text = "Score: " + score;
 
         animator.SetBool("Diyng", isDead);
@@ -106,7 +107,7 @@ public class SpaceshipController : MonoBehaviour
         {
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
-
+            Debug.Log(horizontalInput);
             Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f) * speed * Time.deltaTime;
             Vector3 newPosition = transform.position + movement;
 
@@ -176,7 +177,7 @@ public class SpaceshipController : MonoBehaviour
                 levelStop = true;
                 Destroy(stopPoint.gameObject);
             }
-            Debug.Log(stopPointWorldPosition);
+            
         }
         else
         {

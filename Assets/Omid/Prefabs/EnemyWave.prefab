@@ -123,6 +123,7 @@ MonoBehaviour:
   amplitude: 2
   frequency: 2
   speed: 5.2
+  death: {fileID: 7296247026557411894, guid: c0b3a08c379aa214589ea0355d20203c, type: 3}
 --- !u!54 &-78360715856221104
 Rigidbody:
   m_ObjectHideFlags: 0

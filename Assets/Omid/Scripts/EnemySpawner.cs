@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     public float spawnRadius = 18f;
     public int numberOfEnemies = 3;
     public float spawnInterval = 0.2f;
-
+    public ParticleSystem death;
     private float lastSpawnTime;
     private bool spawned;
     private Transform player;
@@ -63,12 +63,16 @@ public class EnemySpawner : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
+            ParticleSystem deathPS = Instantiate(death, transform.position, Quaternion.identity);
+            Destroy(deathPS, 3f);
             Destroy(other.gameObject);
             Destroy(gameObject);
             SpaceshipController.score += 500;
         }
         if (other.CompareTag("Laser"))
         {
+            ParticleSystem deathPS = Instantiate(death, transform.position, Quaternion.identity);
+            Destroy(deathPS, 3f);
             Destroy(gameObject);
             SpaceshipController.score += 500;
         }

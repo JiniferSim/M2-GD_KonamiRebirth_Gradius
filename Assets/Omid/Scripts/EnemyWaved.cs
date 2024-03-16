@@ -12,6 +12,7 @@ public class EnemyWaved : MonoBehaviour
     private float startTime;
     private bool visible;
     private SpaceshipController spaceshipController;
+    public ParticleSystem death;
 
     void Start()
     {
@@ -49,6 +50,8 @@ public class EnemyWaved : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
+            ParticleSystem deathPS = Instantiate(death, transform.position, Quaternion.identity);
+            Destroy(deathPS, 3f);
             Destroy(other.gameObject);
             Destroy(gameObject);
             SpaceshipController.score += 100;
@@ -56,6 +59,8 @@ public class EnemyWaved : MonoBehaviour
         }
         if (other.CompareTag("Laser"))
         {
+            ParticleSystem deathPS = Instantiate(death, transform.position, Quaternion.identity);
+            Destroy(deathPS, 3f);
             Destroy(gameObject);
             SpaceshipController.score += 100;
             spaceshipController.EnemyDie(transform);

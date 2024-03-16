@@ -187,6 +187,7 @@ MonoBehaviour:
   shootingInterval: 3
   shootSound: {fileID: 0}
   bulletSpeed: 6
+  death: {fileID: 7296247026557411894, guid: c0b3a08c379aa214589ea0355d20203c, type: 3}
 --- !u!1 &7293650670866971898
 GameObject:
   m_ObjectHideFlags: 0

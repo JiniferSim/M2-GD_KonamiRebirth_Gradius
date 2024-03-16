@@ -4,7 +4,7 @@ using UnityEngine;
 public class SpawnedEnemy : MonoBehaviour
 {
     public float speed = 5f;
-
+    public ParticleSystem death;
 
     private Transform player;
     private bool moveLeft = false;
@@ -32,6 +32,8 @@ public class SpawnedEnemy : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
+            ParticleSystem deathPS = Instantiate(death, transform.position, Quaternion.identity);
+            Destroy(deathPS, 3f);
             Destroy(other.gameObject);
             Destroy(gameObject);
             SpaceshipController.score++;
@@ -40,6 +42,8 @@ public class SpawnedEnemy : MonoBehaviour
         }
         if (other.CompareTag("Laser"))
         {
+            ParticleSystem deathPS = Instantiate(death, transform.position, Quaternion.identity);
+            Destroy(deathPS, 3f);
             Destroy(gameObject);
             SpaceshipController.score++;
             spaceshipController.EnemyDie(transform);

@@ -9,8 +9,8 @@ public class EnemyTurret : MonoBehaviour
     public float rotationSpeed = 5f; 
     public float shootingInterval = 2f; 
     public AudioClip shootSound; 
-    public float bulletSpeed = 10f; 
-
+    public float bulletSpeed = 10f;
+    public ParticleSystem death;
     private float lastShootTime;
     private bool visible;
     private AudioSource audioSource; 
@@ -91,6 +91,8 @@ public class EnemyTurret : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
+            ParticleSystem deathPS = Instantiate(death, transform.position, Quaternion.identity);
+            Destroy(deathPS, 3f);
             Destroy(other.gameObject);
             Destroy(gameObject);
             SpaceshipController.score += 200;
@@ -98,6 +100,8 @@ public class EnemyTurret : MonoBehaviour
         }
         if (other.CompareTag("Laser"))
         {
+            ParticleSystem deathPS = Instantiate(death, transform.position, Quaternion.identity);
+            Destroy(deathPS, 3f);
             Destroy(gameObject);
             SpaceshipController.score += 200;
             spaceshipController.EnemyDie(transform);

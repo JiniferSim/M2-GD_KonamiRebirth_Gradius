@@ -72,6 +72,7 @@ MonoBehaviour:
   spawnRadius: 18
   numberOfEnemies: 3
   spawnInterval: 0.5
+  death: {fileID: 7296247026557411894, guid: c0b3a08c379aa214589ea0355d20203c, type: 3}
 --- !u!65 &1579052294289720832
 BoxCollider:
   m_ObjectHideFlags: 0
