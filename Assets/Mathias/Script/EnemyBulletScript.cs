@@ -5,12 +5,10 @@ using UnityEngine;
 public class EnemyBulletScript : MonoBehaviour
 {
     private SpaceshipController spaceshipController;
-    private GameObject player;
     void Start()
     {
         Invoke("SelfDestroy", 15);
-        player = GameObject.FindGameObjectWithTag("Player");
-        spaceshipController = player.GetComponent<SpaceshipController>();
+        spaceshipController = GameObject.FindGameObjectWithTag("Player").GetComponent<SpaceshipController>();
     }
     //Instantiate an Fx burst
     private void OnTriggerEnter(Collider other)
@@ -26,6 +24,7 @@ public class EnemyBulletScript : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             spaceshipController.Diyng();
+            Destroy(gameObject);
         }
     }
     private void SelfDestroy()

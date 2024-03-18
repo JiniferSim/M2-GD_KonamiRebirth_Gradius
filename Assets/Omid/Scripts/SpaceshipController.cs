@@ -26,14 +26,6 @@ public class SpaceshipController : MonoBehaviour
     public static int score;
     public static bool timeStopOn;
     public static bool levelStop;
-    public AudioClip shootSound;
-    public AudioClip laserShootSound;   
-    public AudioClip missileShootSound;
-    public AudioClip diyngSound;
-    public AudioClip takingDamageSound;
-    public AudioClip enemyDiyngSound;
-    public AudioClip pickingUpSound;
-    public AudioClip timeStopSound;
 
     private float speed;
     private float verticalBoundary;
@@ -42,8 +34,6 @@ public class SpaceshipController : MonoBehaviour
     public static float fireRate;
     private GameObject background;
     private GameObject level;
-    private GameObject initLevel;
-    private AudioSource audioSource;
     private GameObject shieldObject;
     private Renderer shieldRenderer;
     private GameObject stopPointObject;
@@ -70,8 +60,6 @@ public class SpaceshipController : MonoBehaviour
     {
         score = 0;
         level = GameObject.Find("Level");
-
-        audioSource = GetComponent<AudioSource>();
 
         Camera mainCamera = Camera.main;
 
@@ -270,11 +258,9 @@ public class SpaceshipController : MonoBehaviour
                 GameObject laser = Instantiate(laserPrefab, assistant.transform.position, new Quaternion(0f, 0f, 0f, 0f));
                 Vector3 laserDirection = assistant.transform.right;
                 laser.GetComponent<Rigidbody>().velocity = laserDirection * speed * 2f;
-                audioSource.PlayOneShot(laserShootSound);
             }
 
             GameObject blast = Instantiate(laserPrefab, transform.position, new Quaternion(0f, 0f, 0f, 0f));
-            audioSource.PlayOneShot(laserShootSound);
 
             Vector3 blastDirection = transform.right;
             blast.GetComponent<Rigidbody>().velocity = blastDirection * speed * 2f;
@@ -287,11 +273,9 @@ public class SpaceshipController : MonoBehaviour
 
                 Vector3 projectileDirection = assistant.transform.right;
                 projectile.GetComponent<Rigidbody>().velocity = projectileDirection * speed * 2f;
-                audioSource.PlayOneShot(shootSound);
             }
 
             GameObject bullet = Instantiate(projectilePrefab, transform.position, new Quaternion(0f,0f,0f,0f));
-            audioSource.PlayOneShot(shootSound);
 
             Vector3 bulletDirection = transform.right;
             bullet.GetComponent<Rigidbody>().velocity = bulletDirection * speed * 2f;
@@ -304,11 +288,9 @@ public class SpaceshipController : MonoBehaviour
 
                 Vector3 bombDirection = assistant.transform.up;
                 bomb.GetComponent<Rigidbody>().velocity = -bombDirection * speed * 2f;
-                audioSource.PlayOneShot(missileShootSound);
             }
 
             GameObject missile = Instantiate(missilePrefab, transform.position, new Quaternion(0f, 0f, 0f, 0f));
-            audioSource.PlayOneShot(missileShootSound);
 
             Vector3 missileDirection = transform.up;
             missile.GetComponent<Rigidbody>().velocity = -missileDirection * speed * 2f;
@@ -373,7 +355,6 @@ public class SpaceshipController : MonoBehaviour
             {
                 Destroy(other.gameObject);
                 barrierLife--;
-                audioSource.PlayOneShot(takingDamageSound);
             }
         }
 
@@ -384,7 +365,6 @@ public class SpaceshipController : MonoBehaviour
 
         if (other.CompareTag("Energy"))
         {
-            audioSource.PlayOneShot(pickingUpSound);
             if (powerUpCounter == 5)
             {
                 powerUpCounter = 1;
@@ -399,7 +379,6 @@ public class SpaceshipController : MonoBehaviour
 
         if (other.CompareTag("TimeStop"))
         {
-            audioSource.PlayOneShot(timeStopSound);
             StartCoroutine(TimeStop());
             Destroy(other.gameObject);
         }
@@ -418,15 +397,20 @@ public class SpaceshipController : MonoBehaviour
     }
     public void Diyng()
     {
-        levelStop = true;
-        timeStopOn = true;
-        Debug.Log("Dead");
-        audioSource.PlayOneShot(diyngSound);
-        audioSource.PlayOneShot(takingDamageSound);
-        isDead = true;
-        Invoke("Respawn", 2f);
-        ship.SetActive(false);
-        Instantiate(playerDeath, transform.position, Quaternion.identity);
+        if (barrierLife <= 0)
+        {
+            levelStop = true;
+            timeStopOn = true;
+            Debug.Log("Dead");
+            isDead = true;
+            Invoke("Respawn", 2f);
+            ship.SetActive(false);
+            Instantiate(playerDeath, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            barrierLife--;
+        }
 
     }
 
@@ -443,7 +427,6 @@ public class SpaceshipController : MonoBehaviour
     {
         float rndValue = Random.value;
 
-        audioSource.PlayOneShot(enemyDiyngSound);
         if (rndValue <= 0.4f && rndValue > 0.1f)
         {
             GameObject energy = Instantiate(energyPrefab, trnfrm.position, Quaternion.identity);
@@ -462,7 +445,7 @@ public class SpaceshipController : MonoBehaviour
     {
         if (barrierLife>0 && !shieldOn)
         {
-            shieldObject = Instantiate(shieldPrefab, new Vector3(transform.position.x+2.5f, transform.position.y, transform.position.z), Quaternion.identity);
+            shieldObject = Instantiate(shieldPrefab, new Vector3(transform.position.x+1f, transform.position.y, transform.position.z), Quaternion.identity);
             shieldObject.transform.SetParent(transform);
             shieldRenderer = shieldObject.GetComponent<Renderer>();
             shieldOn = true;

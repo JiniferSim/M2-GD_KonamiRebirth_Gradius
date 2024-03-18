@@ -5,9 +5,12 @@ using UnityEngine;
 public class EnemyBulletSun : MonoBehaviour
 {
     public ParticleSystem burst;
+
+    private SpaceshipController spaceshipController;
     void Start()
     {
         Invoke("SelfDestroy", 10);
+        spaceshipController = GameObject.FindGameObjectWithTag("Player").GetComponent<SpaceshipController>();
     }
     //Instantiate an Fx burst
     private void OnTriggerEnter(Collider other)
@@ -33,7 +36,8 @@ public class EnemyBulletSun : MonoBehaviour
         }
         if (other.CompareTag("Player"))
         {
-            Destroy(other.gameObject);
+            Destroy(gameObject);
+            spaceshipController.Diyng();
         }
     }
 
